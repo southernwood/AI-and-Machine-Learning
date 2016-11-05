@@ -1,0 +1,68 @@
+    if (not visited[0] and not visited[1]):
+        cost += abs(corners[0][1] - corners[1][1])
+    if (not visited[1] and not visited[3]):
+        cost += abs(corners[1][0] - corners[3][0])
+    if (not visited[3] and not visited[2]):
+        cost += abs(corners[3][1] - corners[2][1])
+    if (not visited[2] and not visited[0]):
+        cost += abs(corners[2][0] - corners[0][0])
+    #print cost
+    dis = []
+    for i in range(0, 4):
+        if (not visited[i]):
+            #val = math.sqrt((x - corners[i][0]) * (x - corners[i][0])  + (y - corners[i][1]) * (y - corners[i][1]))
+            val = abs(x - corners[i][0]) + abs(y - corners[i][1])
+            dis.append(val)
+    if len(dis) == 0:
+        return 0
+   # print  cost + min(dis)
+    return cost + min(dis) # Default to trivial solution
+
+
+                for dy in range(min(py, foodList[j][1]), max(py, foodList[j][1])):
+                    if problem.walls[px][dy]:
+                        down_left += 2
+                    if problem.walls[foodList[j][0]][dy]:
+                        up_right += 2
+                for dx in range(min(px, foodList[j][0]), max(py, foodList[j][0])):
+                    if problem.walls[dx][py]:
+                        down_left += 2
+                    if problem.walls[dx][foodList[j][1]]:
+                        up_right += 2
+
+
+position, foodGrid = state
+    if len(foodGrid.asList()) == 0:
+        return 0
+    foodList = [position] + foodGrid.asList()
+    cost = 0
+    Max = 0
+    for i in range(0, len(foodList)):
+        px , py = foodList[i][0], foodList[i][1]
+        pen = []
+        for j in range(i+1, len(foodList)):
+                manDis = abs(px - foodList[j][0]) + abs(py - foodList[j][1])
+                down_left = 0
+                up_right = 0
+                for dy in range(min(py, foodList[j][1]), max(py, foodList[j][1])):
+                    if problem.walls[px][dy]:
+                        down_left += 3
+                        break
+                    if problem.walls[foodList[j][0]][dy]:
+                        up_right += 3
+                        break
+                for dx in range(min(px, foodList[j][0]), max(py, foodList[j][0])):
+                    if problem.walls[dx][py]:
+                        down_left += 3
+                        break
+                    if problem.walls[dx][foodList[j][1]]:
+                        up_right += 3
+                        break
+                pen.append(manDis + min(down_left, up_right))
+        if (len (pen) != 0):
+            val = min(pen)
+            if (val > Max):
+                Max = val
+            cost += val
+    #print cost
+    return cost - Max# Default to trivial solution
